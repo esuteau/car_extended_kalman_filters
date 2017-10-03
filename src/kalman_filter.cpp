@@ -1,7 +1,10 @@
 #include "kalman_filter.h"
+#include <iostream>
+#include <math.h>
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
+using namespace std;
 
 KalmanFilter::KalmanFilter() {}
 
@@ -51,14 +54,25 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float py = x_(1);
   float vx = x_(2);
   float vy = x_(3);
+  cout << "(px, py, vx, vy) = " << px << ", " << py << ", " << vx << ", " << vy << endl;
   float z_pred_0 = sqrt(pow(px, 2) + pow(py, 2));
   float z_pred_1 = atan2(py, px);
+  cout << "z_pred_1 = " << z_pred_1 << endl;
   float z_pred_2 = (px * vx + py * vy) / z_pred_0;
   VectorXd z_pred(3);
   z_pred << z_pred_0, z_pred_1, z_pred_2;
 
   // Calculate y
   VectorXd y = z - z_pred;
+  cout << "y (angle) = " << y[1] << endl;
+
+  // Make sure y is in the range [-pi; pi]
+  while (y[1] < -M_PI){
+    y[1] += 2 * M_PI;
+  }
+  while (y[1] > M_PI){
+    y[1] -= 2 * M_PI;
+  }
   
   // Use Jacobian matrix to calculate S and K
 	MatrixXd Ht = H_.transpose();
