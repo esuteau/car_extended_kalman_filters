@@ -134,8 +134,8 @@ int main()
 
           // Calculate the accuracy of the prediction
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
-          cout << "Estimations (px, py, vx, vy): " << p_x << ", " << p_y << ", " << v1 << ", " << v2 << endl;
-          cout << "Truth       (px, py, vx, vy): " << x_gt << ", " << y_gt << ", " << vx_gt << ", " << vy_gt << endl;
+          // cout << "Estimations (px, py, vx, vy): " << p_x << ", " << p_y << ", " << v1 << ", " << v2 << endl;
+          // cout << "Truth       (px, py, vx, vy): " << x_gt << ", " << y_gt << ", " << vx_gt << ", " << vy_gt << endl;
           cout << "RMSE        (px, py, vx, vy): " << RMSE(0) << ", " << RMSE(1) << ", " << RMSE(2) << ", " << RMSE(3) << endl;
           
           // Create a json structure to store the results
